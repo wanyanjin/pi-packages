@@ -1,5 +1,29 @@
 # pi-packages
 
+## ModelFusion compatibility distribution
+
+This branch packages only the native subagents core and worktree provider, in that order.
+It retains upstream implementation and history; the generic workspace-resume change lives on `feat/resumable-workspaces`.
+The root manifest is a distribution adapter, not a replacement subagent runtime.
+
+```sh
+pi remove npm:@gotgenes/pi-subagents-worktrees
+pi remove npm:@gotgenes/pi-subagents
+pi install git:github.com/wanyanjin/pi-packages@model-fusion-compat
+pi update git:github.com/wanyanjin/pi-packages@model-fusion-compat
+```
+
+Do not load the npm packages alongside this bundle: they would register duplicate native tools/providers.
+Keep the permission extension installed separately, and restart Pi after switching sources.
+Run ModelFusion's `npm run setup:pi` after installation to check the actual manifest, provider order and generated profiles.
+The branch ref is explicit, so ordinary updates stay on the compatibility channel rather than silently replacing it with an npm release.
+A commit ref may be used instead when an immutable deployment is required.
+Original in-memory sessions survive worktree cleanup, not session release, parent reload or process restart.
+Raise native retention settings before release when a task stage needs longer than the default consumed window.
+Ignored dependencies and build outputs are not Git snapshots and may need reinstalling in a recreated worktree.
+
+The upstream monorepo documentation below is retained for provenance; this branch does not install its other packages.
+
 A monorepo of [Pi](https://github.com/badlogic/pi-mono) extension packages, published to npm under `@gotgenes/`.
 Some packages (like pi-permission-system) are designed for broad use; others scratch a personal itch and are shared in case they help others.
 
