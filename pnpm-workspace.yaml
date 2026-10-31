@@ -1,4 +1,5 @@
 # Compatibility distribution: only the two native runtime packages are installed.
+linkWorkspacePackages: true
 packages:
   - packages/pi-subagents
   - packages/pi-subagents-worktrees
